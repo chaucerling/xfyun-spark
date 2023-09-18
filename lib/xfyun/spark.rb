@@ -7,20 +7,18 @@ module Xfyun
     class Error < StandardError; end
 
     class Configuration
-      attr_accessor :appid, :api_key, :api_secret, :api_type, :api_version, :uri_base, :request_timeout
+      attr_accessor :appid, :api_key, :api_secret, :model, :host, :request_timeout
 
-      DEFAULT_API_TYPE = "general".freeze
-      DEFAULT_API_VERSION = "v1.1".freeze
-      DEFAULT_URI_BASE = "spark-api.xf-yun.com".freeze
+      DEFAULT_MODEL = "V1.5".freeze
+      DEFAULT_HOST = "spark-api.xf-yun.com".freeze
       DEFAULT_REQUEST_TIMEOUT = 120
 
       def initialize
         @appid = nil
         @api_key = nil
         @api_secret = nil
-        @api_type = DEFAULT_API_TYPE
-        @api_version = DEFAULT_API_VERSION
-        @uri_base = DEFAULT_URI_BASE
+        @model = DEFAULT_MODEL
+        @host = DEFAULT_HOST
         @request_timeout = DEFAULT_REQUEST_TIMEOUT
       end
     end
