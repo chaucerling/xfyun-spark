@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xfyun-spark (0.1.0)
+    xfyun-spark (0.1.2)
       faye-websocket
 
 GEM
