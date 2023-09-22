@@ -29,6 +29,7 @@ Xfyun::Spark.configure do |config|
   # config.model = 'V1.5'
   # config.host = 'your host'
   # config.request_timeout = 10
+  # config.logger = Logger.new($stdout)
 end
 ```
 
@@ -68,10 +69,10 @@ Chat with custom header and parameter
 
 ```ruby
 response_body = client.chat(
+  header: {
+    uid: "12345"
+  },
   parameter: {
-    header: {
-      uid: "12345"
-    },
     chat: {
       temperature: 0.5,
       max_tokens: 1024,

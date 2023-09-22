@@ -14,8 +14,7 @@ module Xfyun
         data = nil
         EM.run {
           url = authorization_url(path)
-          # puts url
-          # puts parameters
+          logging(:info, "request url: #{url}, parameters: #{parameters}")
           ws = Faye::WebSocket::Client.new(url)
 
           ws.on(:open) do |event|
@@ -24,17 +23,20 @@ module Xfyun
           end
 
           ws.on(:close) do |event|
+            logging(:info, "ws close: #{event.code} #{event.reason}")
             # p [:close, event.code, event.reason]
             EM.stop
           end
 
           ws.on(:error) do |event|
+            logging(:info, "ws error: #{event.message}")
             # p [:error, event.message]
             raise Xfyun::Spark::Error.new(event.message)
           end
 
           ws.on(:message) do |event|
             # p [:message, event.data]
+            logging(:info, "ws message: #{event.data}")
             response_data = JSON.parse(event.data)
             code = response_data.dig('header', 'code')
             if code == 0

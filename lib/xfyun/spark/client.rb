@@ -3,7 +3,7 @@ module Xfyun
     class Client
       include Xfyun::Spark::Request
 
-      CONFIG_KEYS = %i[appid api_key api_secret model host request_timeout].freeze
+      CONFIG_KEYS = %i[appid api_key api_secret model host request_timeout logger].freeze
       attr_reader *CONFIG_KEYS, :request_version, :request_domain
 
       def initialize(config = {})
@@ -25,7 +25,7 @@ module Xfyun
       def chat(header: {}, parameter: {}, payload: {})
         header = default_header.merge(header)
         parameter = default_parameter.map do |k, v|
-          [k, v.merge(parameter.fetch(k))]
+          [k, v.merge(parameter[k] || {})]
         end.to_h
         request(path: "/chat", parameters: {
           header: header,
@@ -44,6 +44,10 @@ module Xfyun
             domain: @request_domain,
           }
         }
+      end
+
+      def logging(level, msg)
+        @logger.send(level, msg) if @logger != nil
       end
 
     end
