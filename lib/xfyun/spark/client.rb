@@ -22,7 +22,7 @@ module Xfyun
         }.fetch(@model)
       end
 
-      def chat(header: {}, parameter: {}, payload: {})
+      def chat(header: {}, parameter: {}, payload: {}, stream: nil)
         header = default_header.merge(header)
         parameter = default_parameter.map do |k, v|
           [k, v.merge(parameter[k] || {})]
@@ -30,8 +30,8 @@ module Xfyun
         request(path: "/chat", parameters: {
           header: header,
           parameter: parameter,
-          payload: payload
-        })
+          payload: payload,
+        }, stream: stream)
       end
 
       def default_header

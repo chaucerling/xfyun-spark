@@ -9,7 +9,7 @@ module Xfyun
   module Spark
     module Request
 
-      def request(path:, parameters:)
+      def request(path:, parameters:, stream:)
         content = ""
         data = nil
         EM.run {
@@ -38,6 +38,9 @@ module Xfyun
             # p [:message, event.data]
             logging(:info, "ws message: #{event.data}")
             response_data = JSON.parse(event.data)
+            if stream.respond_to?(:call)
+              stream.call(response_data)
+            end
             code = response_data.dig('header', 'code')
             if code == 0
               status = response_data.dig('header', 'status')

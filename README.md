@@ -87,6 +87,21 @@ response_body = client.chat(
 answer = response_body.dig('payload', 'choices', 'text', 0, 'content')
 ```
 
+Chat with stream
+
+```ruby
+client.chat(
+  payload: {
+    message: {
+      text: [{"role": "user", "content": "你是谁"}]
+    }
+  },
+  stream: proc do |chunk|
+    puts chunk
+  end
+)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
